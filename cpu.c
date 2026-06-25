@@ -357,25 +357,25 @@ static void cpuRR(uint8_t *reg)
 }
 
 //Direct calls for a
-static void cpuRLCA()
+static void cpuRLCA(uint8_t *none)
 {
 	cpuRLC(&a);
 	f &= ~P_FLAG_Z;
 }
 
-static void cpuRRCA()
+static void cpuRRCA(uint8_t *none)
 {
 	cpuRRC(&a);
 	f &= ~P_FLAG_Z;
 }
 
-static void cpuRLA()
+static void cpuRLA(uint8_t *none)
 {
 	cpuRL(&a);
 	f &= ~P_FLAG_Z;
 }
 
-static void cpuRRA()
+static void cpuRRA(uint8_t *none)
 {
 	cpuRR(&a);
 	f &= ~P_FLAG_Z;
@@ -508,7 +508,7 @@ static void cpuHALT(uint8_t *none)
 		cpuHaltLoop = true;
 }
 
-static void cpuBcInc()
+static void cpuBcInc(uint8_t *none)
 {
 	uint16_t tmp = c | b<<8;
 	tmp++;
@@ -516,7 +516,7 @@ static void cpuBcInc()
 	b = tmp>>8;
 }
 
-static void cpuDeInc()
+static void cpuDeInc(uint8_t *none)
 {
 	uint16_t tmp = e | d<<8;
 	tmp++;
@@ -524,7 +524,7 @@ static void cpuDeInc()
 	d = tmp>>8;
 }
 
-static void cpuHlInc()
+static void cpuHlInc(uint8_t *none)
 {
 	uint16_t tmp = l | h<<8;
 	tmp++;
@@ -532,12 +532,12 @@ static void cpuHlInc()
 	h = tmp>>8;
 }
 
-static void cpuSpInc()
+static void cpuSpInc(uint8_t *none)
 {
 	sp++;
 }
 
-static void cpuBcDec()
+static void cpuBcDec(uint8_t *none)
 {
 	uint16_t tmp = c | b<<8;
 	tmp--;
@@ -545,7 +545,7 @@ static void cpuBcDec()
 	b = tmp>>8;
 }
 
-static void cpuDeDec()
+static void cpuDeDec(uint8_t *none)
 {
 	uint16_t tmp = e | d<<8;
 	tmp--;
@@ -553,7 +553,7 @@ static void cpuDeDec()
 	d = tmp>>8;
 }
 
-static void cpuHlDec()
+static void cpuHlDec(uint8_t *none)
 {
 	uint16_t tmp = l | h<<8;
 	tmp--;
@@ -561,7 +561,7 @@ static void cpuHlDec()
 	h = tmp>>8;
 }
 
-static void cpuSpDec()
+static void cpuSpDec(uint8_t *none)
 {
 	sp--;
 }
@@ -581,8 +581,8 @@ static void cpuSTde(uint8_t *reg) { memSet8(e | d<<8, (*reg)); }
 static void cpuSThl(uint8_t *reg) { memSet8(l | h<<8, (*reg)); }
 static void cpuSTt16(uint8_t *reg) { memSet8(cpuTmp16, (*reg)); }
 
-static void cpuSThlInc(uint8_t *reg) { cpuSThl(reg); cpuHlInc(); }
-static void cpuSThlDec(uint8_t *reg) { cpuSThl(reg); cpuHlDec(); }
+static void cpuSThlInc(uint8_t *reg) { cpuSThl(reg); cpuHlInc(NULL); }
+static void cpuSThlDec(uint8_t *reg) { cpuSThl(reg); cpuHlDec(NULL); }
 
 static void cpuInc(uint8_t *reg)
 {
@@ -1390,11 +1390,11 @@ void cpuCycle()
 			break;
 		case CPU_TMP_READ8_HL_INC:
 			cpuTmp = memGet8(l | h<<8);
-			cpuHlInc();
+			cpuHlInc(NULL);
 			break;
 		case CPU_TMP_READ8_HL_DEC:
 			cpuTmp = memGet8(l | h<<8);
-			cpuHlDec();
+			cpuHlDec(NULL);
 			break;
 		case CPU_TMP_READ8_PC_INC:
 			cpuTmp = memGet8(pc++);
