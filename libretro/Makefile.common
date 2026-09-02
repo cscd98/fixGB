@@ -1,0 +1,10 @@
+SOURCES_C := $(CORE_DIR)/libretro/libretro.c \
+	$(CORE_DIR)/main.c \
+	$(CORE_DIR)/apu.c \
+	$(CORE_DIR)/cpu.c \
+	$(CORE_DIR)/input.c \
+	$(CORE_DIR)/mbc.c \
+	$(CORE_DIR)/mem.c \
+	$(CORE_DIR)/ppu.c
+
+INCFLAGS := -I$(CORE_DIR) -I$(CORE_DIR)/libretro
