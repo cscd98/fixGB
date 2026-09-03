@@ -344,17 +344,11 @@ CXXFLAGS += -std=c++98
 
 CORE_DIR := ..
 
-OBJS := $(CORE_DIR)/libretro/libretro.o \
-        $(CORE_DIR)/main.o \
-        $(CORE_DIR)/apu.o \
-	$(CORE_DIR)/cpu.o \
-	$(CORE_DIR)/input.o \
-	$(CORE_DIR)/mbc.o \
-	$(CORE_DIR)/mem.o \
-	$(CORE_DIR)/ppu.o
+include $(CORE_DIR)/libretro/Makefile.common
+
+OBJS := $(SOURCES_C:.c=.o)
 
 DEFINES  += -D__LIBRETRO__ $(PLATFORM_DEFINES)
-INCFLAGS += -I. -I..
 
 
 CFLAGS   += $(fpic) $(DEFINES) -Werror=implicit-function-declaration
